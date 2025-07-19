@@ -1,81 +1,187 @@
 # 🏪 Sistema de Gestión de Tienda
 
-## 📋 Instrucciones de Uso Fácil
+Un sistema completo de gestión de inventario para pequeñas tiendas, desarrollado en Python con interfaz gráfica moderna.
 
-### 🚀 Opción 1: Aplicación Ejecutable (MÁS FÁCIL)
+![Python](https://img.shields.io/badge/python-v3.13+-blue.svg)
+![PyQt6](https://img.shields.io/badge/PyQt6-GUI-green.svg)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-brightgreen.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-1. **Ve a la carpeta `dist`**
-2. **Busca el archivo `TiendaGestion`**
-3. **Haz doble clic** en él
-4. ¡Listo! La aplicación se abrirá automáticamente
+## ✨ Características
 
-### 🔧 Opción 2: Script de Ejecución
+- 📦 **Gestión de Inventario**: Control completo de stock por cantidades
+- 💰 **Cálculos Automáticos**: Inversión, ganancias y márgenes en tiempo real
+- 🛒 **Ventas Inteligentes**: Venta parcial de productos con stock múltiple
+- 📊 **Estadísticas Visuales**: Dashboard con ganancias totales y estado del inventario
+- 🎨 **Interfaz Moderna**: Diseño intuitivo con códigos de colores
+- 💾 **Base de Datos**: Almacenamiento persistente con MongoDB
+- 🖥️ **Ejecutable**: Aplicación independiente sin necesidad de instalar Python
 
-1. **Haz doble clic** en `Ejecutar_Tienda.command`
-2. Si aparece una advertencia de seguridad:
-   - Ve a **Preferencias del Sistema** → **Seguridad y Privacidad**
-   - Haz clic en **"Abrir de todas formas"**
-3. La aplicación se ejecutará en una ventana de terminal
+## 🚀 Instalación y Uso
 
-### 💻 Opción 3: Terminal (Para usuarios técnicos)
+### Opción 1: Ejecutable (Recomendado para usuarios finales)
 
+1. Descarga el archivo `TiendaGestion_ParaUsuarios.zip` desde [Releases](../../releases)
+2. Descomprime el archivo
+3. Haz doble clic en `TiendaGestion.app` (macOS)
+4. ¡Listo! La aplicación se ejecutará automáticamente
+
+### Opción 2: Desde el código fuente
+
+#### Prerrequisitos
+- Python 3.13+
+- MongoDB (local o remoto)
+
+#### Instalación
 ```bash
-cd "Tienda para N"
-source .venv/bin/activate
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/sistema-gestion-tienda.git
+cd sistema-gestion-tienda
+
+# Crear entorno virtual
+python -m venv .venv
+source .venv/bin/activate  # En Windows: .venv\Scripts\activate
+
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Ejecutar la aplicación
 python main.py
 ```
 
-## 📦 ¿Qué hace esta aplicación?
+## 🛠️ Desarrollo
 
-- ➕ **Agregar productos** con cálculo automático de ganancias
-- 📋 **Ver inventario** completo con estadísticas
-- 💰 **Marcar productos como vendidos**
-- 📊 **Calcular ganancias totales** automáticamente
-- 🎨 **Interfaz moderna y fácil de usar**
+### Estructura del Proyecto
+```
+sistema-gestion-tienda/
+├── main.py              # Punto de entrada de la aplicación
+├── gui.py               # Interfaz gráfica (PyQt6)
+├── models.py            # Modelos de datos (Product)
+├── database.py          # Conexión y operaciones de MongoDB
+├── utils.py             # Utilidades auxiliares
+├── requirements.txt     # Dependencias del proyecto
+├── build_app.py         # Script para crear ejecutable
+├── create_user_package.py # Script para paquete de distribución
+├── Ejecutar_Tienda.command # Script de ejecución rápida
+└── README.md            # Este archivo
+```
 
-## 🔄 Distribución a Otros Usuarios
+### Tecnologías Utilizadas
+- **Python 3.13**: Lenguaje principal
+- **PyQt6**: Framework de interfaz gráfica
+- **MongoDB**: Base de datos NoSQL
+- **PyMongo**: Driver de MongoDB para Python
+- **PyInstaller**: Creación de ejecutables
+- **python-dotenv**: Gestión de variables de entorno
 
-### Para compartir con personas sin conocimientos técnicos:
+### Crear Ejecutable
+```bash
+# Instalar PyInstaller
+pip install pyinstaller
 
-1. **Copia solo el archivo `TiendaGestion`** de la carpeta `dist`
-2. **Pégalo en cualquier computadora Mac**
-3. **Haz doble clic** para ejecutar
-4. ¡Ya está funcionando!
+# Crear ejecutable
+python build_app.py
 
-### Para desarrolladores:
+# Crear paquete para distribución
+python create_user_package.py
+```
 
-- Comparte toda la carpeta del proyecto
-- Incluye el entorno virtual (`.venv`)
-- Usa `Ejecutar_Tienda.command` para ejecución rápida
+## 📋 Funcionalidades Detalladas
 
-## 🛠️ Requisitos del Sistema
+### Gestión de Productos
+- ✅ Agregar productos con información completa
+- ✅ Categorización automática
+- ✅ Control de cantidad por producto
+- ✅ Cálculo automático de inversión total
+- ✅ Previsualización de ganancias esperadas
+- ✅ Validación de datos en tiempo real
 
-- **macOS 10.14** o superior
-- **No requiere instalación** adicional (versión ejecutable)
-- **Base de datos local** (se crea automáticamente)
+### Sistema de Ventas
+- ✅ Venta de cantidades específicas
+- ✅ Control automático de stock
+- ✅ Actualización de inventario en tiempo real
+- ✅ Registro de ventas parciales
+- ✅ Confirmaciones de seguridad
 
-## 🆘 Solución de Problemas
+### Análisis y Reportes
+- ✅ Dashboard con estadísticas en tiempo real
+- ✅ Ganancia total acumulada
+- ✅ Productos disponibles vs vendidos
+- ✅ Alertas de stock bajo
+- ✅ Estados visuales por colores
 
-### Si no se abre la aplicación:
+## 🎯 Casos de Uso
 
-1. **Clic derecho** en `TiendaGestion` → **Abrir**
-2. Si aparece advertencia de seguridad: **"Abrir de todas formas"**
-3. En caso de problemas, usa `Ejecutar_Tienda.command`
+### Pequeña Tienda de Ropa
+- Gestiona inventario de zapatos, ropa, accesorios
+- Control de tallas y cantidades
+- Cálculo de márgenes de ganancia
 
-### Si aparecen errores:
+### Tienda de Perfumería
+- Inventario de perfumes y cosméticos
+- Control de stock por unidades
+- Seguimiento de productos más vendidos
 
-- Asegúrate de tener **permisos de escritura** en la carpeta
-- La aplicación creará automáticamente la base de datos
-- **Reinicia** la aplicación si hay problemas de conexión
+### Negocio de Accesorios
+- Gestión de joyería, bolsas, mochilas
+- Control preciso de inventario
+- Análisis de rentabilidad por producto
+
+## 🔧 Configuración
+
+### Variables de Entorno (Opcional)
+Crea un archivo `.env` en la raíz del proyecto:
+```env
+MONGODB_URI=mongodb://localhost:27017/
+```
+
+### Categorías de Productos
+Las categorías predefinidas incluyen:
+- Joyería
+- Perfumería
+- Calzado
+- Bolsas
+- Mochilas
+- Cobertores
+- Sábanas
+
+*Puedes modificar las categorías en `models.py`*
+
+## 🤝 Contribuciones
+
+Las contribuciones son bienvenidas. Para contribuir:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📝 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para detalles.
 
 ## 📞 Soporte
 
-Si tienes problemas, revisa que:
+Si tienes problemas o preguntas:
 
-- ✅ El archivo `TiendaGestion` tiene permisos de ejecución
-- ✅ Tu Mac permite aplicaciones de desarrolladores identificados
-- ✅ Tienes espacio suficiente en disco
+1. Revisa la sección de [Issues](../../issues)
+2. Crea un nuevo issue si no encuentras solución
+3. Proporciona detalles del error y tu sistema operativo
+
+## 🚀 Roadmap
+
+### Próximas Funcionalidades
+- [ ] Exportación de reportes a PDF/Excel
+- [ ] Sistema de códigos de barras
+- [ ] Múltiples sucursales
+- [ ] API REST para integración
+- [ ] Aplicación móvil complementaria
+- [ ] Sistema de usuarios y permisos
+- [ ] Backup automático de datos
 
 ---
 
-_Creado con ❤️ para gestión fácil de inventarios_
+**Desarrollado con ❤️ para pequeños negocios**
+
+*¿Te gusta el proyecto? ¡Dale una ⭐ en GitHub!*
