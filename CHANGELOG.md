@@ -8,6 +8,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 ## [1.0.0] - 2025-07-19
 
 ### ✨ Añadido
+
 - Sistema completo de gestión de inventario
 - Control de stock por cantidades
 - Cálculos automáticos de inversión, ganancia y margen
@@ -22,6 +23,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Confirmaciones de seguridad para ventas
 
 ### 🛠️ Técnico
+
 - Migración de PyQt5 a PyQt6 para compatibilidad con Python 3.13
 - Arquitectura modular con separación de responsabilidades
 - Scripts automatizados para creación de ejecutables
@@ -29,6 +31,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Documentación completa en README
 
 ### 📦 Categorías Incluidas
+
 - Joyería
 - Perfumería
 - Calzado
@@ -38,6 +41,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 - Sábanas
 
 ### 🎯 Funcionalidades Principales
+
 - **Agregar Productos**: Formulario completo con cálculos automáticos
 - **Gestión de Stock**: Control por cantidades con alertas visuales
 - **Sistema de Ventas**: Venta parcial o total de productos
@@ -50,12 +54,14 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 ## 🚀 Versiones Futuras
 
 ### [1.1.0] - Planificado
+
 - [ ] Exportación de reportes a PDF/Excel
 - [ ] Sistema de códigos de barras
 - [ ] Búsqueda y filtros avanzados
 - [ ] Respaldo automático de datos
 
 ### [2.0.0] - Planificado
+
 - [ ] Múltiples sucursales
 - [ ] Sistema de usuarios y permisos
 - [ ] API REST para integración

@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QPushButton,
                            QLabel, QLineEdit, QComboBox, QMessageBox, 
                            QTableWidget, QTableWidgetItem, QHBoxLayout,
                            QGroupBox, QFormLayout, QHeaderView, QFrame,
-                           QSpacerItem, QSizePolicy, QSpinBox)
+                           QSpacerItem, QSizePolicy, QSpinBox, QTextEdit)
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont, QColor, QPalette
 from models import Product
@@ -39,7 +39,8 @@ class StoreGUI(QMainWindow):
             }
             QLabel {
                 font-size: 12px;
-                color: #333;
+                color: #2c3e50;
+                font-weight: bold;
             }
         """)
 
@@ -63,10 +64,11 @@ class StoreGUI(QMainWindow):
             QGroupBox {
                 font-size: 16px;
                 font-weight: bold;
-                border: 2px solid #bdc3c7;
+                border: 2px solid #34495e;
                 border-radius: 10px;
                 margin: 10px;
                 padding-top: 15px;
+                color: #2c3e50;                    
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
@@ -141,17 +143,21 @@ class AddProductWindow(QMainWindow):
                 border-radius: 10px;
                 margin: 10px;
                 padding-top: 15px;
+                color: #2c3e50;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
                 padding: 0 10px 0 10px;
+                color: #2c3e50;
             }
             QLineEdit, QComboBox {
                 padding: 8px;
                 border: 2px solid #ddd;
                 border-radius: 5px;
                 font-size: 12px;
+                color: #2c3e50;
+                background-color: white;
             }
             QLineEdit:focus, QComboBox:focus {
                 border-color: #3498db;
@@ -167,6 +173,12 @@ class AddProductWindow(QMainWindow):
             }
             QPushButton:hover {
                 background-color: #229954;
+            }
+            QLabel {
+                color: #2c3e50;
+                font-weight: bold;
+                font-size: 13px;
+                background-color: transparent;
             }
         """)
 
@@ -630,8 +642,22 @@ class InventoryWindow(QMainWindow):
             }
         """)
         
+        # Botón para ver detalles
+        details_button = QPushButton('📋 Ver Detalles')
+        details_button.clicked.connect(self.show_product_details)
+        details_button.setMinimumHeight(45)
+        details_button.setStyleSheet("""
+            QPushButton {
+                background-color: #9b59b6;
+            }
+            QPushButton:hover {
+                background-color: #8e44ad;
+            }
+        """)
+        
         buttons_layout.addWidget(sell_button)
         buttons_layout.addWidget(refresh_button)
+        buttons_layout.addWidget(details_button)
         buttons_layout.addStretch()
         
         layout.addLayout(buttons_layout)
@@ -804,6 +830,30 @@ class InventoryWindow(QMainWindow):
         self.sell_window = SellProductWindow(self.db, product_name, available_stock, self)
         self.sell_window.show()
 
+    def show_product_details(self):
+        current_row = self.table.currentRow()
+        if current_row < 0:
+            QMessageBox.warning(self, '⚠️ Advertencia', 
+                'Por favor, seleccione un producto de la tabla')
+            return
+
+        product_name = self.table.item(current_row, 0).text()
+        
+        # Buscar el producto en la base de datos
+        products = self.db.get_all_products()
+        selected_product = None
+        for product in products:
+            if product['name'] == product_name:
+                selected_product = product
+                break
+        
+        if selected_product:
+            # Abrir ventana de detalles
+            self.details_window = ProductDetailsWindow(selected_product)
+            self.details_window.show()
+        else:
+            QMessageBox.error(self, '❌ Error', 'No se pudo encontrar el producto seleccionado')
+
 class SellProductWindow(QMainWindow):
     def __init__(self, db, product_name, available_stock, parent_window):
         super().__init__()
@@ -965,3 +1015,262 @@ class SellProductWindow(QMainWindow):
             # Actualizar la ventana padre y cerrar
             self.parent_window.load_products()
             self.close()
+
+class ProductDetailsWindow(QMainWindow):
+    def __init__(self, product_data):
+        super().__init__()
+        self.product_data = product_data
+        self.init_ui()
+
+    def init_ui(self):
+        self.setWindowTitle(f'📋 Detalles - {self.product_data["name"]}')
+        self.setGeometry(250, 250, 500, 600)
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #f8f9fa;
+            }
+            QGroupBox {
+                font-size: 14px;
+                font-weight: bold;
+                border: 2px solid #bdc3c7;
+                border-radius: 10px;
+                margin: 10px;
+                padding-top: 15px;
+                color: #2c3e50;
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 10px 0 10px;
+                color: #2c3e50;
+            }
+            QLabel {
+                color: #2c3e50;
+                font-size: 13px;
+                padding: 5px;
+                background-color: transparent;
+            }
+            QTextEdit {
+                border: 2px solid #ddd;
+                border-radius: 5px;
+                padding: 8px;
+                background-color: white;
+                color: #2c3e50;
+                font-size: 12px;
+            }
+            QPushButton {
+                background-color: #34495e;
+                color: white;
+                border: none;
+                padding: 12px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #2c3e50;
+            }
+        """)
+
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+        layout = QVBoxLayout(central_widget)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(15)
+
+        # Título
+        title_label = QLabel(f'📋 Información Completa del Producto')
+        title_label.setFont(QFont('Arial', 18, QFont.Weight.Bold))
+        title_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        title_label.setStyleSheet("color: #2c3e50; margin-bottom: 20px; padding: 10px;")
+        layout.addWidget(title_label)
+
+        # Información básica
+        basic_group = QGroupBox("📦 Información Básica")
+        basic_layout = QFormLayout(basic_group)
+        basic_layout.setSpacing(10)
+
+        # Nombre
+        name_label = QLabel(self.product_data['name'])
+        name_label.setStyleSheet("""
+            QLabel {
+                background-color: #ecf0f1;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 14px;
+            }
+        """)
+        basic_layout.addRow("🏷️ Nombre:", name_label)
+
+        # Categoría
+        category_label = QLabel(self.product_data['category'])
+        category_label.setStyleSheet("""
+            QLabel {
+                background-color: #ecf0f1;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        """)
+        basic_layout.addRow("📂 Categoría:", category_label)
+
+        layout.addWidget(basic_group)
+
+        # Información financiera
+        financial_group = QGroupBox("💰 Información Financiera")
+        financial_layout = QFormLayout(financial_group)
+        financial_layout.setSpacing(10)
+
+        # Precio de costo
+        cost_label = QLabel(f"${self.product_data['cost_price']:.2f}")
+        cost_label.setStyleSheet("""
+            QLabel {
+                background-color: #e74c3c;
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        """)
+        financial_layout.addRow("💸 Precio de Costo:", cost_label)
+
+        # Precio de venta
+        price_label = QLabel(f"${self.product_data['selling_price']:.2f}")
+        price_label.setStyleSheet("""
+            QLabel {
+                background-color: #27ae60;
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        """)
+        financial_layout.addRow("💰 Precio de Venta:", price_label)
+
+        # Ganancia por unidad
+        profit_per_unit = self.product_data['selling_price'] - self.product_data['cost_price']
+        profit_label = QLabel(f"${profit_per_unit:.2f}")
+        profit_color = "#27ae60" if profit_per_unit > 0 else "#e74c3c" if profit_per_unit < 0 else "#95a5a6"
+        profit_label.setStyleSheet(f"""
+            QLabel {{
+                background-color: {profit_color};
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }}
+        """)
+        financial_layout.addRow("📊 Ganancia por Unidad:", profit_label)
+
+        layout.addWidget(financial_group)
+
+        # Información de inventario
+        inventory_group = QGroupBox("📦 Información de Inventario")
+        inventory_layout = QFormLayout(inventory_group)
+        inventory_layout.setSpacing(10)
+
+        # Cantidad total
+        total_quantity = self.product_data.get('quantity', 1)
+        total_label = QLabel(str(total_quantity))
+        total_label.setStyleSheet("""
+            QLabel {
+                background-color: #3498db;
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        """)
+        inventory_layout.addRow("📦 Cantidad Total:", total_label)
+
+        # Cantidad vendida
+        sold_quantity = self.product_data.get('sold_quantity', 0)
+        sold_label = QLabel(str(sold_quantity))
+        sold_label.setStyleSheet("""
+            QLabel {
+                background-color: #e67e22;
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }
+        """)
+        inventory_layout.addRow("🛒 Cantidad Vendida:", sold_label)
+
+        # Stock disponible
+        available_quantity = total_quantity - sold_quantity
+        available_label = QLabel(str(available_quantity))
+        available_color = "#27ae60" if available_quantity > 0 else "#e74c3c"
+        available_label.setStyleSheet(f"""
+            QLabel {{
+                background-color: {available_color};
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }}
+        """)
+        inventory_layout.addRow("✅ Stock Disponible:", available_label)
+
+        # Ganancia total realizada
+        total_profit = profit_per_unit * sold_quantity
+        total_profit_label = QLabel(f"${total_profit:.2f}")
+        total_profit_color = "#27ae60" if total_profit > 0 else "#e74c3c" if total_profit < 0 else "#95a5a6"
+        total_profit_label.setStyleSheet(f"""
+            QLabel {{
+                background-color: {total_profit_color};
+                color: white;
+                padding: 8px;
+                border-radius: 5px;
+                font-weight: bold;
+            }}
+        """)
+        inventory_layout.addRow("💚 Ganancia Total Realizada:", total_profit_label)
+
+        layout.addWidget(inventory_group)
+
+        # Descripción completa
+        description_group = QGroupBox("📝 Descripción Completa")
+        description_layout = QVBoxLayout(description_group)
+        
+        description_text = QTextEdit()
+        description_text.setPlainText(self.product_data.get('description', 'Sin descripción'))
+        description_text.setReadOnly(True)
+        description_text.setMinimumHeight(120)
+        description_layout.addWidget(description_text)
+        
+        layout.addWidget(description_group)
+
+        # Información adicional
+        additional_group = QGroupBox("ℹ️ Información Adicional")
+        additional_layout = QFormLayout(additional_group)
+        
+        # Fecha de creación
+        created_at = self.product_data.get('created_at', 'No disponible')
+        if hasattr(created_at, 'strftime'):
+            created_str = created_at.strftime('%d/%m/%Y %H:%M')
+        else:
+            created_str = str(created_at)
+        
+        created_label = QLabel(created_str)
+        created_label.setStyleSheet("""
+            QLabel {
+                background-color: #ecf0f1;
+                padding: 8px;
+                border-radius: 5px;
+            }
+        """)
+        additional_layout.addRow("📅 Fecha de Creación:", created_label)
+        
+        layout.addWidget(additional_group)
+
+        # Botón cerrar
+        close_button = QPushButton('✅ Cerrar')
+        close_button.clicked.connect(self.close)
+        close_button.setMinimumHeight(45)
+        layout.addWidget(close_button)
+
+        # Espaciador
+        spacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        layout.addItem(spacer)

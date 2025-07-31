@@ -29,10 +29,12 @@ Un sistema completo de gestión de inventario para pequeñas tiendas, desarrolla
 ### Opción 2: Desde el código fuente
 
 #### Prerrequisitos
+
 - Python 3.13+
 - MongoDB (local o remoto)
 
 #### Instalación
+
 ```bash
 # Clonar el repositorio
 git clone https://github.com/tu-usuario/sistema-gestion-tienda.git
@@ -47,11 +49,29 @@ pip install -r requirements.txt
 
 # Ejecutar la aplicación
 python main.py
+
+# O usar el script optimizado para macOS
+python run_app.py
 ```
+
+#### ⚠️ Nota Importante para usuarios de macOS con M1/M2
+
+Si experimentas errores del plugin "cocoa" al ejecutar PyQt6, utiliza la versión específica incluida en `requirements.txt`:
+
+```bash
+# Desinstalar versión problemática (si es necesario)
+pip uninstall PyQt6 PyQt6-Qt6 -y
+
+# Instalar versión compatible
+pip install PyQt6==6.7.1
+```
+
+**Solución integrada**: El script `run_app.py` ya incluye la configuración necesaria para macOS y resuelve automáticamente los problemas de plugins de PyQt6.
 
 ## 🛠️ Desarrollo
 
 ### Estructura del Proyecto
+
 ```
 sistema-gestion-tienda/
 ├── main.py              # Punto de entrada de la aplicación
@@ -67,6 +87,7 @@ sistema-gestion-tienda/
 ```
 
 ### Tecnologías Utilizadas
+
 - **Python 3.13**: Lenguaje principal
 - **PyQt6**: Framework de interfaz gráfica
 - **MongoDB**: Base de datos NoSQL
@@ -75,6 +96,7 @@ sistema-gestion-tienda/
 - **python-dotenv**: Gestión de variables de entorno
 
 ### Crear Ejecutable
+
 ```bash
 # Instalar PyInstaller
 pip install pyinstaller
@@ -89,6 +111,7 @@ python create_user_package.py
 ## 📋 Funcionalidades Detalladas
 
 ### Gestión de Productos
+
 - ✅ Agregar productos con información completa
 - ✅ Categorización automática
 - ✅ Control de cantidad por producto
@@ -97,6 +120,7 @@ python create_user_package.py
 - ✅ Validación de datos en tiempo real
 
 ### Sistema de Ventas
+
 - ✅ Venta de cantidades específicas
 - ✅ Control automático de stock
 - ✅ Actualización de inventario en tiempo real
@@ -104,6 +128,7 @@ python create_user_package.py
 - ✅ Confirmaciones de seguridad
 
 ### Análisis y Reportes
+
 - ✅ Dashboard con estadísticas en tiempo real
 - ✅ Ganancia total acumulada
 - ✅ Productos disponibles vs vendidos
@@ -113,16 +138,19 @@ python create_user_package.py
 ## 🎯 Casos de Uso
 
 ### Pequeña Tienda de Ropa
+
 - Gestiona inventario de zapatos, ropa, accesorios
 - Control de tallas y cantidades
 - Cálculo de márgenes de ganancia
 
 ### Tienda de Perfumería
+
 - Inventario de perfumes y cosméticos
 - Control de stock por unidades
 - Seguimiento de productos más vendidos
 
 ### Negocio de Accesorios
+
 - Gestión de joyería, bolsas, mochilas
 - Control preciso de inventario
 - Análisis de rentabilidad por producto
@@ -130,13 +158,17 @@ python create_user_package.py
 ## 🔧 Configuración
 
 ### Variables de Entorno (Opcional)
+
 Crea un archivo `.env` en la raíz del proyecto:
+
 ```env
 MONGODB_URI=mongodb://localhost:27017/
 ```
 
 ### Categorías de Productos
+
 Las categorías predefinidas incluyen:
+
 - Joyería
 - Perfumería
 - Calzado
@@ -145,7 +177,7 @@ Las categorías predefinidas incluyen:
 - Cobertores
 - Sábanas
 
-*Puedes modificar las categorías en `models.py`*
+_Puedes modificar las categorías en `models.py`_
 
 ## 🤝 Contribuciones
 
@@ -172,6 +204,7 @@ Si tienes problemas o preguntas:
 ## 🚀 Roadmap
 
 ### Próximas Funcionalidades
+
 - [ ] Exportación de reportes a PDF/Excel
 - [ ] Sistema de códigos de barras
 - [ ] Múltiples sucursales
@@ -184,4 +217,4 @@ Si tienes problemas o preguntas:
 
 **Desarrollado con ❤️ para pequeños negocios**
 
-*¿Te gusta el proyecto? ¡Dale una ⭐ en GitHub!*
+_¿Te gusta el proyecto? ¡Dale una ⭐ en GitHub!_

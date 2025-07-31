@@ -13,7 +13,7 @@ def build_executable():
     # Comando PyInstaller con configuraciones optimizadas
     cmd = [
         "pyinstaller",
-        "--onefile",                    # Un solo archivo
+        "--onedir",                     # Cambiar a directorio (mejor para plugins)
         "--windowed",                   # Sin ventana de terminal
         "--name=TiendaGestion",         # Nombre de la aplicación
         "--add-data=database.py:.",     # Incluir archivos necesarios
@@ -23,18 +23,19 @@ def build_executable():
         "--hidden-import=PyQt6",        # Asegurar que PyQt6 se incluya
         "--hidden-import=pymongo",      # Asegurar que pymongo se incluya
         "--hidden-import=dotenv",       # Asegurar que python-dotenv se incluya
-        "main.py"
+        "--collect-all=PyQt6",          # Incluir todos los módulos de PyQt6
+        "run_app.py"                    # Usar el script de configuración
     ]
     
     try:
         # Ejecutar PyInstaller
         result = subprocess.run(cmd, check=True, capture_output=True, text=True)
         print("✅ ¡Aplicación creada exitosamente!")
-        print("📁 El ejecutable está en: dist/TiendaGestion")
+        print("📁 El ejecutable está en: dist/TiendaGestion/")
         print("\n📋 Instrucciones:")
-        print("1. Ve a la carpeta 'dist'")
-        print("2. Copia 'TiendaGestion' donde quieras")
-        print("3. Haz doble clic para ejecutar")
+        print("1. Ve a la carpeta 'dist/TiendaGestion'")
+        print("2. Copia toda la carpeta donde quieras")
+        print("3. Haz doble clic en 'TiendaGestion' para ejecutar")
         
     except subprocess.CalledProcessError as e:
         print(f"❌ Error al crear la aplicación: {e}")
